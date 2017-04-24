@@ -1,0 +1,36 @@
+-- my mac
+java_home : cat ~/.bash_profile
+/usr/libexec/java_home -V 查看現有JVM版本
+
+lsof -nP -sTCP:LISTEN | grep 8081
+
+
+
+-- eclipse
+產生heap dump report
+-XX:+HeapDumpOnOutOfMemoryError
+
+
+-- 公司IP
+125.227251.217:10443  -> bt-vpn
+
+tibco@172.17.24.237
+tibco@123
+
+
+-- 總和多個資料夾的容量
+Command(蘋果)+Option(Alt)+I
+
+-- Finder 顯示隱藏檔
+defaults write com.apple.finder AppleShowAllFiles TRUE;\killall Finder
+-- Finder 不顯示隱藏檔
+defaults write com.apple.finder AppleShowAllFiles FALSE;\killall Finder
+
+--禁止.DS_store生成：
+defaults write com.apple.desktopservices DSDontWriteNetworkStores -bool TRUE
+
+--恢復.DS_store生成：
+defaults delete com.apple.desktopservices DSDontWriteNetworkStores
+
+--刪除已存在的.DS_Store
+sudo find . -name ".DS_Store" -depth -exec rm {} \;

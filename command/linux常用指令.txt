@@ -1,0 +1,75 @@
+-- linux
+/etc/vsftpd/userconf	->ftp帳號root路徑
+/etc/passwd				->系統帳號 一般使用者
+/etc/shadow				->個人密碼
+/etc/group				->群組
+
+
+-- 讀取gz檔 找出特定文字 輸出到file
+zgrep -H '886923104710' *.gz >> 1.csv
+
+-- 查看disk usage
+du -h --max-depth=1
+
+
+ls -tlr
+
+//將輸出資訊指定寫入到檔案
+指令 >> 路徑/檔名
+
+//使用高級權限(需當前使用者密碼)
+sudo any command
+
+//複製檔案
+cp -r fromPath toPath 
+
+//查詢檔案數量(不包含隱藏檔案)
+ls -1 | wc -l
+
+//查詢服務
+ps -ef | grep TICMonitorOsMain
+
+//查詢CPU使用狀況(by day)
+sar -u -f /var/log/sa/sa25
+
+//檔案內文搜尋(並計算hit)
+grep 'API name:' SCMS.2016-04-18.0.log | wc -l
+
+//查詢port號
+sudo lsof -i :11202 | grep LISTEN
+
+//解壓縮
+unzip bpmesb-monitor-1.0-bin.zip
+
+//DNS設定(修改指定設定檔案)
+/etc/hosts
+
+————排程————
+//列出主機上的排程
+crontab -l
+//編輯排程
+crontab -e
+//crontab時間表示
+分(0-59)時(0-23)日(1-31)月(1-12)週(0-6) 
+//exp
+*/1 * * * * do anything ——>每分鐘 做任何事
+
+————system V————
+//查詢目前註冊的服務項目
+1. chkconfig —list
+2. cd /etc/init.d/ 目錄內亦有服務項目
+chkconfig [--list] [--type type][name]
+chkconfig --add name
+chkconfig --del name
+chkconfig --override name
+chkconfig [--level levels] [--type type] name <on|off|reset|resetpriorities>
+chkconfig [--level levels] [--type type] name
+
+————shell script————
+//開頭與結尾
+#!/bin/bash
+exit 0
+
+————Other————
+
+

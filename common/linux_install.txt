@@ -1,0 +1,3 @@
+安裝 Oracle Linux, Red Hat Enterprise Linux and CentOS
+yum update
+yum install gcc

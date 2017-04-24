@@ -1,0 +1,44 @@
+oracle安裝
+
+先建立3個群組 -g [gid 設置groupId]
+groupadd -g 12345 oinstall
+groupadd -g 12346 dba
+groupadd -g 12347 oper
+
+建立使用者 -u [uid 設置userId], -g [初始群組] -G [次要群組]
+useradd -u 12345 -g oinstall -G dba,oper oracle
+passwd admin12345
+
+建立oracle home目錄
+mkdir /ora12c
+chown -R oracle.oinstall /ora12c
+chmod 775 /ora12c
+
+設定環境變數
+umask “限定”每一個新增的檔案、目錄的基本使用權限（permission）
+
+vi ~/.bash_profile
+umask 022
+加入環境變數
+export ORACLE_BASE=/ora12c/app/oracle
+export ORACLE_HOME=$ORACLE_BASE/product/12.1.0/db_1
+export ORACLE_SID=orcl
+export PATH=$ORACLE_HOME/bin:$PATH
+
+
+
+
+
+sqlplus /nolog
+connect / as sysdba
+startup
+
+lsnrctl start
+tnsping orcl
+
+
+自動重啟
+vi /etc/oratab
+最後一行N改Ｙ
+
+root 建立/etc/init.d/dbora

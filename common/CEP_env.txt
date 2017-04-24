@@ -1,0 +1,85 @@
+CEP prod環境
+CEP 1~6, 9~11 (LINUX)
+CEP 7~8	(WINDOWS)
+user：cep/tibco123 
+user：cepftp/cepftp@123
+---------------------------
+
+//Decoder, Scheduler 部署至
+cepftp@172.27.21.166
+cepftp@172.27.21.167
+cepftp@172.27.21.148
+查詢Decoder Processor
+ps -ef | grep LIModuleStarter
+
+166 : cbs
+167 : data, noc, qa, qos, ss7, worryfree, cbs
+148 : data, noc, qa, qos, ss7, worryfree
+
+查詢Scheduler Processor
+ps -ef | grep SchedulerModuleStarter
+
+
+//Post部署至
+cep@172.27.21.146
+cep@172.27.21.147
+
+
+//Monitor 部署
+cep@172.27.21.148
+
+查詢Monitor Processor
+ps -ef | grep CepMonitorOsMain
+
+
+CEP 7~8 Spotfire
+sfireadmin / sfireadmin
+
+------------------------------
+ActiveMQ(Active Address/ InstanceName / StandBy Address)
+
+172.27.21.167:8161  DataInputInstance(worryfree)	172.27.21.166:8161 
+172.27.21.167:8162	QaInputInstance(qa)				172.27.21.166:8162 
+172.27.21.167:8163	NocInputInstance(noc)			172.27.21.166:8163 
+172.27.21.148:8164	CBSInputInstance(cbs)			172.27.21.167:8164
+172.27.21.148:8165	QoSInputInstance(qos)			172.27.21.167:8165
+172.27.21.148:8166	SS7InputInstance(ss7)			172.27.21.167:8166
+172.27.21.148:8167	CemInputInstance(cem)			172.27.21.166:8167
+
+172.27.21.146:8161	PostProcessorInstance(output)	172.27.21.147:8161
+
+
+-- oralce mount空間查詢
+df -h
+
+--------------------------------
+cd /etc/vsftpd/userconf
+
+cepftp			/var/ftp/cep
+esbftp			/var/ftp/esb
+worryfreeftp	/var/ftp/worryfree
+cdrwebftp		/var/ftp/cdr
+polystar		/var/ftp/polystar
+tvmftp			/var/ftp/tvm
+
+
+# mongo batch config路徑
+172.27.21.40 66 69
+cep/1qaz!QAZ
+sh/mongo_batch/properties/cep.properties
+
+# mongo batch log 路徑
+/var/lib/mongodb/raw_data/log
+
+# mongo database連線指令
+cd /opt/mongodb/3.2.8/bin
+./mongo -u root -p qazxsw@1234 --host 172.27.21.40 --port 20001 admin
+rs.status()
+
+
+# CEP Web
+
+國際漫遊資料查詢
+http://172.27.21.168/cep/csw/getIntlRoaming?agent_id=ADMIN&mobile_no=0909545200&cycle_start=&cycle_end=
+
+

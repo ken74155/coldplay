@@ -1,0 +1,72 @@
+主要分支
+	master: 永遠處在 production-ready 狀態
+	develop: 最新的下次發佈開發狀態
+支援性分支
+	Feature branches: 開發新功能都從 develop 分支出來，完成後 merge 回 develop
+	Release branches: 準備要 release 的版本，只修 bugs。從 develop 分支出來，完成後 merge 回 master 和 develop
+	Hotfix branches: 等不及 release 版本就必須馬上修 master 趕上線的情況。會從 master 分支出來，完成後 merge 回 master 和 develop
+
+
+
+
+#checkout remote branch
+git checkout -b <local_name> <remote_name>
+
+#刪除本地分支
+git branch -d <the_local_branch>
+
+#刪除遠端分支
+1.git push <remote name> :<branch name>
+2.git push origin :<branchName>
+
+#GitLab 刪除遠端branch，local端無法同步
+#刪除 remote 底下所有過時的分支
+git remote prune <remote name>
+
+#查看遠端已刪除但本地未同步的分支
+git fetch -p
+#當remote branch is not exist, git branch -a 還看得到的時候
+git fetch --all --prune 
+
+#則會完全抹掉前一次的 commit
+git reset –hard HEAD^ 
+
+
+
+
+
+
+
+
+一旦分支中的提交物件發佈到公共倉庫，就千萬不要對該分支進行衍合操作。
+預設pull 為merge
+避免merge可使用rebase
+git pull --rebase 
+
+1.
+ 	  D---E master
+     /
+A---B---C---F origin/master
+
+2.
+	  D--------E  
+     /          \
+A---B---C---F----G   master, origin/master
+
+3.
+A---B---C---F---D'---E'   master, origin/master
+
+
+
+
+1. 先對 feature branch 做 `git rebase develop`。會很苦，但是弄完會很有成就感，
+	整個 branch commit history 會變成很乾淨。請學 interactive mode，
+	可以讓你拿掉一些 commit、合併或修改，你也可以 rebase 多次直到滿意為止。
+2. 在從 develop branch 做 `git merge feature/some_awesome_feature –no-ff`，
+	–no-ff 的意思是會強制留一個 merge commit log 記錄，這可以讓 commit tree 看清楚發生了 merge 動作。
+	(因為我們剛做了 rebase，而 git 預設的合併模式是 fast-forward，所以如果不加 –no-ff 是不會有 merge commit 的) 
+	這個 merge commit 的另一個額外方便之處是，如果想要 reset/revert 整個 branch 只要 reset/revert 這個 commit 就可以了。
+3. 如果此 feature branch 有 remote branch，要先砍掉 `git push origin :feature/some_awesome_feature` 再 `git push origin develop` (這是因為 rebase 一個已經 push 出去的 repository，然後又把修改的 history push 出去，會造成超級大災難啊~)
+
+先 rebase 再 merge –no-ff 這樣做的好處到底是什麼? 看圖體會一下吧：
+
